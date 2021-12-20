@@ -1,7 +1,7 @@
 drop table if exists date_dim_text;
 create table date_dim_text
 (
-    d_date_sk                 int,
+    d_date_sk                 int PRIMARY KEY,
     d_date_id                 string,
     d_date                    string,
     d_month_seq               int,

@@ -1,7 +1,7 @@
 drop table if exists store_text;
 create table store_text
 (
-    s_store_sk                int,
+    s_store_sk                int PRIMARY KEY,
     s_store_id                string,
     s_rec_start_date          string,
     s_rec_end_date            string,

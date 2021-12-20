@@ -1,7 +1,7 @@
 drop table if exists customer_text;
 create table customer_text
 (
-    c_customer_sk             int,
+    c_customer_sk             int PRIMARY KEY,
     c_customer_id             string,
     c_current_cdemo_sk        int,
     c_current_hdemo_sk        int,
