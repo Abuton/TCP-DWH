@@ -9,22 +9,22 @@ CREATE TABLE customer_text
     c_first_shipto_date_sk    int,
     c_first_sales_date_sk     int,
     c_salutation              string,
-    c_first_name              string,
-    c_last_name               string,
+    c_first_name              string not null,
+    c_last_name               string not null,
     c_preferred_cust_flag     string,
     c_birth_day               int,
     c_birth_month             int,
     c_birth_year              int,
     c_birth_country           string,
     c_login                   string,
-    c_email_address           string,
+    c_email_address           string not null,
     c_last_review_date        string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", inferSchema "true", path "TPCDS_GENDATA_DIR/customer")
+OPTIONS(header "false", delimiter "|", path "TPCDS_GENDATA_DIR/customer")
 ;
 DROP TABLE IF EXISTS customer;
-CREATE TABLE customer USING parquet
+CREATE TABLE customer USING PARQUET
 AS (SELECT * FROM customer_text WHERE (mod(abs(HASH(c_customer_id)), 8) > 0))
 ;
 DROP TABLE IF EXISTS customer_text;
