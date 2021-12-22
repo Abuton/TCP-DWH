@@ -1,7 +1,7 @@
 drop table if exists item_text;
 create table item_text
 (
-    i_item_sk                 int,
+    i_item_sk                 int not null,
     i_item_id                 string,
     i_rec_start_date          string,
     i_rec_end_date            string,
