@@ -1,7 +1,7 @@
 drop table if exists item_text;
 create table item_text
 (
-    i_item_sk                 int PRIMARY KEY,
+    i_item_sk                 int,
     i_item_id                 string,
     i_rec_start_date          string,
     i_rec_end_date            string,
@@ -25,11 +25,11 @@ create table item_text
     i_product_name            string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/item")
+OPTIONS(header "false", delimiter "|", path "TPCDS_GENDATA_DIR/item")
 ;
 drop table if exists item;
 create table item
 using parquet
-as (select * from item_text)
+as (select * from item_text where mod(abs(hash(i_item_id)), 8) > 0)
 ;
 drop table if exists item_text;

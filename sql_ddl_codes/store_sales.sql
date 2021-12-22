@@ -1,7 +1,7 @@
 drop table if exists store_sales_text;
 create table store_sales_text
 (
-    ss_sold_date_sk           int PRIMARY KEY,
+    ss_sold_date_sk           int not null,
     ss_sold_time_sk           int,
     ss_item_sk                int,
     ss_customer_sk            int,
@@ -26,11 +26,10 @@ create table store_sales_text
     ss_net_profit             double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store_sales")
-;
+OPTIONS(header "false", delimiter "|", inferSchema "true", path "TPCDS_GENDATA_DIR/store_sales");
 drop table if exists store_sales;
 create table store_sales
 using parquet
-as (select * from store_sales_text)
-;
+as (select * from store_sales_text where mod(abs(hash(cast(ss_ticket_number as string))), 50) = 0);
+
 drop table if exists store_sales_text;

@@ -1,7 +1,7 @@
 drop table if exists date_dim_text;
 create table date_dim_text
 (
-    d_date_sk                 int PRIMARY KEY,
+    d_date_sk                 int not null,
     d_date_id                 string,
     d_date                    string,
     d_month_seq               int,
@@ -31,7 +31,7 @@ create table date_dim_text
     d_current_year            string
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/date_dim")
+OPTIONS(header "false", delimiter "|", path "TPCDS_GENDATA_DIR/date_dim")
 ;
 drop table if exists date_dim;
 create table date_dim

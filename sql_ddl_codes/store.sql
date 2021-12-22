@@ -1,7 +1,7 @@
 drop table if exists store_text;
 create table store_text
 (
-    s_store_sk                int PRIMARY KEY,
+    s_store_sk                int,
     s_store_id                string,
     s_rec_start_date          string,
     s_rec_end_date            string,
@@ -32,11 +32,11 @@ create table store_text
     s_tax_precentage          double
 )
 USING csv
-OPTIONS(header "false", delimiter "|", path "${TPCDS_GENDATA_DIR}/store")
+OPTIONS(header "false", delimiter "|", path "TPCDS_GENDATA_DIR/store")
 ;
 drop table if exists store;
 create table store 
 using parquet
-as (select * from store_text)
+as (select * from store_text where mod(abs(hash(s_store_id)), 10) > 0)
 ;
 drop table if exists store_text;
