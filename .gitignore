@@ -1,3 +1,5 @@
 src
 spark-warehouse
 __pycache__
+metastore_db
+*.log
