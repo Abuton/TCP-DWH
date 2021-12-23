@@ -26,6 +26,3 @@ I have also included a folder `sql_queries` inside the `sql_ddl_codes` folder wh
 
 `task4.md` contains the answer to the questions.
 
-### Challenges
-
-I could not enforce the consistency checks both on the PK and FK. After researching, I understood Spark does not have a PK or FK concept and when specified in the ddl codes I always run into mismatched error.
