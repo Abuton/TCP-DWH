@@ -12,7 +12,7 @@ Question: Imagine doing the ETL ingestion and table creation on the full TPC-DS 
 
 - **OutOfMemory Error**
 - **Substantial Increase in wait time for I/O processing**
-- **Substantial Increase Garbage Collection**
+- **Substantial Increase in Garbage Collection**
 
 ## Where would it occur?
 
@@ -28,6 +28,7 @@ Question: Imagine doing the ETL ingestion and table creation on the full TPC-DS 
 
 - Resource Management: Spark doesn’t come batteries included when it comes to setting up Spark contexts and configuration. Even for simple tasks, one has to end up setting these things up
 - Out of Memory Error
+- Java Runtime Error could occur
 
 ## How should you change the code in other to process such a large amount of data?
 
