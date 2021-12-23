@@ -26,7 +26,7 @@ Question: Imagine doing the ETL ingestion and table creation on the full TPC-DS 
 
 ## What are the most common Spark bottlenecks when increasing the data scale?
 
-- Resource Management: Spark doesn’t come batteries included when it comes to setting up Spark contexts and configuration. Even for simple tasks, you have to end up setting these things up
+- Resource Management: Spark doesn’t come batteries included when it comes to setting up Spark contexts and configuration. Even for simple tasks, one has to end up setting these things up
 - Out of Memory Error
 
 ## How should you change the code in other to process such a large amount of data?
