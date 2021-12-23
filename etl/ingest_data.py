@@ -6,11 +6,10 @@ logging.basicConfig(
 )
 logging.getLogger().setLevel(logging.INFO)
 tpcdsRootDir = "datasapien_dwh"
-tpcdsWorkDir = "datasapien_dwh/work"
 tpcdsDdlDir = "../sql_ddl_codes"
-tpcdsGenDataDir = "../src/data"
-tpcdsQueriesDir = "../src/queries"
-tpcdsDatabaseName = "TPCDS1G"
+tpcdsGenDataDir = "s3://somebucketname"
+tpcdsQueriesDir = "../sql_ddl_codes/sql_queries"
+tpcdsDatabaseName = "FMCG_DB"
 
 logging.info("TPCDS root directory is at : ", tpcdsRootDir)
 logging.info("TPCDS ddl scripts directory is at: ", tpcdsDdlDir)
@@ -29,15 +28,15 @@ def get_spark_session():
     return spark
 
 
-def clearTableDirectory(tableName):
+def clear_table_directory(tableName):
     import os
-    if os.path.isdir(f"spark-warehouse/tpcds1g.db/{tableName}/"):
-        os.remove(f"spark-warehouse/tpcds1g.db/{tableName}")
+    if os.path.isdir(f"spark-warehouse/fmcg.db/{tableName}/"):
+        os.remove(f"spark-warehouse/fmcg.db/{tableName}")
     else:
         logging.info(f"Creating path for DWH for table {tableName}")
 
 
-def createDatabase(spark):
+def create_database(spark):
     spark.sql(f"DROP DATABASE IF EXISTS {tpcdsDatabaseName} CASCADE")
     spark.sql(f"CREATE DATABASE IF NOT EXISTS {tpcdsDatabaseName}")
     spark.sql(f"USE {tpcdsDatabaseName}")
@@ -47,8 +46,8 @@ def createDatabase(spark):
 #  Function to create a table in spark. It reads the DDL script for each of the
 #  tpc-ds table and executes it on Spark.
 
-def createTable(tableName: str, spark):
-    clearTableDirectory(tableName)
+def create_table(tableName: str, spark):
+    clear_table_directory(tableName)
     logging.info(f"Creating table {tableName} ..")
     spark.sql(f"DROP TABLE IF EXISTS {tableName}")
     _, content = spark.sparkContext.wholeTextFiles(f"{tpcdsDdlDir}/{tableName}.sql").collect()[0]
@@ -56,7 +55,7 @@ def createTable(tableName: str, spark):
     sqlStmts = content.replace('\n', ' ')\
         .replace("TPCDS_GENDATA_DIR", tpcdsGenDataDir)\
         .replace("csv", "org.apache.spark.sql.execution.datasources.csv.CSVFileFormat")\
-        .replace("DBNAME", "tpcds1g").split(";")[:-1]
+        .replace("DBNAME", "fmcg").split(";")[:-1]
     for stmt in sqlStmts:
         try:
             spark.sql(stmt.strip())
@@ -67,6 +66,6 @@ def createTable(tableName: str, spark):
 if __name__ == "__main__":
     tables = ["customer", "item", "store", "date_dim", "store_sales"]
     spark = get_spark_session()
-    createDatabase(spark)
+    create_database(spark)
     for table in tables:
-        createTable(table, spark)
+        create_table(table, spark)

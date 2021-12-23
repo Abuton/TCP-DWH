@@ -1,4 +1,4 @@
-from ingest_data import get_spark_session, createDatabase
+from ingest_data import get_spark_session, create_database
 import logging
 from pprint import pprint
 
@@ -26,7 +26,7 @@ def add_pk_constraint(spark, tableName: str, pkColumn: str):
 
 if __name__ == "__main__":
     spark = get_spark_session()
-    createDatabase(spark)
+    create_database(spark)
     tables_pk_column = {
         "customer": "c_customer_sk",
         "item": "i_item_sk",
