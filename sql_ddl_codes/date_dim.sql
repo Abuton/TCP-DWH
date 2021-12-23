@@ -37,5 +37,5 @@ drop table if exists date_dim;
 create table date_dim
 using parquet
 as (select * from date_dim_text)
-;
+LOCATION 'alluxio://master_hostname:port/date_dim';
 drop table if exists date_dim_text;

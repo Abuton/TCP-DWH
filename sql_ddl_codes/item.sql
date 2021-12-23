@@ -31,5 +31,5 @@ drop table if exists item;
 create table item
 using parquet
 as (select * from item_text where mod(abs(hash(i_item_id)), 8) > 0)
-;
+LOCATION 'alluxio://master_hostname:port/item';
 drop table if exists item_text;

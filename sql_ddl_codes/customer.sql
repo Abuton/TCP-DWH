@@ -26,5 +26,6 @@ OPTIONS(header "false", delimiter "|", path "TPCDS_GENDATA_DIR/customer")
 DROP TABLE IF EXISTS customer;
 CREATE TABLE customer USING PARQUET
 AS (SELECT * FROM customer_text WHERE (mod(abs(HASH(c_customer_id)), 8) > 0))
+LOCATION 'alluxio://master_hostname:port/customer';
 ;
 DROP TABLE IF EXISTS customer_text;

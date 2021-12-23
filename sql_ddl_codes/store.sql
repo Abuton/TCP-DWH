@@ -38,5 +38,5 @@ drop table if exists store;
 create table store 
 using parquet
 as (select * from store_text where mod(abs(hash(s_store_id)), 10) > 0)
-;
+LOCATION 'alluxio://master_hostname:port/store';
 drop table if exists store_text;
