@@ -1,6 +1,6 @@
 # TCP-DWH
 
-## Python ETL code using Pyspark
+## Python ETL code using Pyspark API
 
 The `etl` folder holds the solution to this task. The `ingest_data.py` is responsible for reading the ddl scripts and creating the hive tables. I had used the `tpc-ds` toolkit to generate the data.
 
